@@ -1,2 +1,0 @@
-# FindenMX
-Finden MX App

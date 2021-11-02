@@ -191,18 +191,18 @@ class AddCardPageState extends State<AddCardPage> {
                                         loadProgress();
                                         cardManagerProvider.isLoading = false;
                                         if (cardManagerProvider.agregada) {
-                                          _showSuccessfulAlert(
+                                          AlertMsg.showSuccessAlert(
                                               context,
-                                              'La tarjeta se añadió correctamente',
                                               'Tarjeta Añadida',
-                                              widget.token.toString());
+                                              'La tarjeta se añadió correctamente',
+                                              widget.token.toString(),
+                                              'payments');
                                           cardManagerProvider.agregada = false;
                                         } else {
-                                          _errorAlert(
+                                          AlertMsg.showErrorAlert(
                                               context,
-                                              cardManagerProvider.errormsg
-                                                  .toString(),
-                                              'Intenta nuevamente, verifica tus datos');
+                                              'Intenta nuevamente, verifica tus datos',
+                                              cardManagerProvider.errormsg.toString());
                                         }
                                       }),
                             /*Align(
@@ -262,62 +262,6 @@ class AddCardPageState extends State<AddCardPage> {
       cvvCode = creditCardModel.cvvCode;
       isCvvFocused = creditCardModel.isCvvFocused;
     });
-  }
-
-  void _errorAlert(BuildContext context, String textM, String title) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  void _showSuccessfulAlert(
-      BuildContext context, String textM, String title, String token) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.pushReplacementNamed(context, 'payments',
-                      arguments: token);
-                },
-              ),
-            ],
-          );
-        });
   }
 }
 

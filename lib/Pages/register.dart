@@ -203,20 +203,22 @@ class _RegisterForm extends StatelessWidget {
                         registerFormProvider.isLoading = false;
 
                         if (registerFormProvider.registeredUser != null) {
-                          login.email = registerFormProvider.email!;
-                          login.password = registerFormProvider.password!;
-                          await login.getToken();
-                          final loginToken = login.myToken;
-                          _showPaymentAlert(context, 'Registro exitoso',
-                              'Registrado', loginToken.toString());
-
-                          Constants.isLogged = true;
-                        } else {
-                          _mostrarAlert(
+                            login.email = registerFormProvider.email!;
+                            login.password = registerFormProvider.password!;
+                            await login.getToken();
+                            final loginToken = login.myToken;
+                            AlertMsg.showSuccessAlert(
                               context,
-                              registerFormProvider.errorsList.toString(),
-                              //'La contraseña debe tener por lo menos:\n\nUna letra minúscula.\n\nUna letra mayúscula.\n\nUn carácter especial como ()._-.',
-                              'Intenta nuevamente, verifica tus datos');
+                              'Registrado', 
+                              'Registro exitoso',
+                              loginToken.toString(),
+                              Constants.isInitialRegistered == true ? '/':'payments');
+                            Constants.isLogged = true;
+                        } else {
+                          AlertMsg.showErrorAlert(
+                            context,
+                            'Intenta nuevamente, verifica tus datos',
+                            registerFormProvider.errorsList.toString());
                           registerFormProvider.errorsList.clear();
                         }
                       })
@@ -226,64 +228,5 @@ class _RegisterForm extends StatelessWidget {
     );
   }
 
-  void _mostrarAlert(BuildContext context, String textM, String title) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  void _showPaymentAlert(
-      BuildContext context, String textM, String title, String token) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  if(Constants.isInitialRegistered){
-                    Navigator.pushReplacementNamed(context, '/',
-                      arguments: '');
-                  } else {
-                  Navigator.pushReplacementNamed(context, 'payments',
-                      arguments: token);
-                  }
-                },
-              ),
-            ],
-          );
-        });
-  }
+  
 }

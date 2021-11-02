@@ -36,11 +36,9 @@ class _HeaderIcon extends StatelessWidget {
 class _PurpleBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: double.infinity,//size.height * 0.4,
-      //decoration: _purpleBackground(),
+      height: double.infinity,
       child: Stack(
         children: [
           
@@ -50,21 +48,10 @@ class _PurpleBox extends StatelessWidget {
           Positioned(child: _Bubble(
             itsColor:Color.fromRGBO(2, 82, 116, 1)
           ), top: -70, left: -90),
-          
-          /*Positioned(child: _Bubble(), top: 80, left: 40),
-          Positioned(child: _Bubble(), bottom: 50, right: 20),
-          Positioned(child: _Bubble(), top: 100, left: 40),
-          Positioned(child: _Bubble(), top: 20, left: 40)*/
         ],
       ),
     );
   }
-
-  BoxDecoration _purpleBackground() => BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color.fromRGBO(63, 63, 156, 1),
-        Color.fromRGBO(90, 70, 178, 1)
-      ]));
 }
 
 class _Bubble extends StatelessWidget {

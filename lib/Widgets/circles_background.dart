@@ -71,11 +71,10 @@ class _CirclesBox extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    //final size = MediaQuery.of(context).size;
     return Container(
       width: double.infinity,
-      height: double.infinity, //size.height * 0.4,
-      //decoration: _purpleBackground(),
+      height: double.infinity,
       child: Stack(
         children: [
           Positioned(
@@ -90,12 +89,6 @@ class _CirclesBox extends StatelessWidget {
       ),
     );
   }
-
-  BoxDecoration _purpleBackground() => BoxDecoration(
-          gradient: LinearGradient(colors: [
-        Color.fromRGBO(63, 63, 156, 1),
-        Color.fromRGBO(90, 70, 178, 1)
-      ]));
 }
 
 class _Bubble extends StatelessWidget {

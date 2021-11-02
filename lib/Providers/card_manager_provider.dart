@@ -15,6 +15,7 @@ class CardManagerProvider extends ChangeNotifier {
   String? cvv = "";
   String? expmon = "";
   String? expyea = "";
+  String? errorPaidMsg = "";
   bool agregada = false;
   bool paid = false;
   String? errormsg = '';
@@ -105,10 +106,9 @@ class CardManagerProvider extends ChangeNotifier {
       print('msg ' + data['message']);
     } else {
       paid = false;
+      errorPaidMsg = data['message'].toString();
       print('no pagada ' + data['message']);
     }
     notifyListeners();
   }
-
-  
 }

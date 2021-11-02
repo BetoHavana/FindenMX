@@ -184,10 +184,10 @@ class _LoginForm extends StatelessWidget {
                           Navigator.pushReplacementNamed(context, 'findcar',
                               arguments: loginForm.myToken);
                         } else {
-                          _mostrarAlert(
+                          AlertMsg.showErrorAlert(
                               context,
-                              'Revisa tu correo y contraseña',
-                              'Usuario no encontrado');
+                              'Usuario no encontrado',
+                              'Revisa tu correo y contraseña');
                         }
                       })
           ],
@@ -196,30 +196,5 @@ class _LoginForm extends StatelessWidget {
     );
   }
 
-  void _mostrarAlert(BuildContext context, String textM, String title) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
+  
 }

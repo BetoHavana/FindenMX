@@ -142,10 +142,11 @@ class _CarBrowserForm extends StatelessWidget {
                               'Vehículo encontrado',
                               this.token);
                         } else {
-                          _mostrarAlert(
-                              context,
-                              'Intenta nuevamente, verifica la placa y modelo',
-                              'No encontrado');
+                          AlertMsg.showErrorAlert(
+                            context,
+                            'Vehículo no encontrado',
+                            'Intenta nuevamente, verifica la placa y modelo',
+                          );
                         }
                       })
           ],
@@ -153,34 +154,7 @@ class _CarBrowserForm extends StatelessWidget {
       ),
     );
   }
-
-  void _mostrarAlert(BuildContext context, String textM, String title) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
+  
   void _showPaymentAlert(
       BuildContext context, String textM, String title, String token) {
     showDialog(

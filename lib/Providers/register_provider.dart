@@ -53,33 +53,31 @@ class RegisterProvider extends ChangeNotifier {
     if (data.containsKey('user')) {
       print('true' + jsonData);
       registeredUser = RegisterModel.fromJson(jsonData);
-    } else {
+    } else if (data.containsKey('errors')) {
       errors = RegisterErrorsModel.fromJson(jsonData);
       print(errors);
       registeredUser = null;
-      final String localJson = '''
+      /*final String localJson = '''
       {
         "errrors": [
             {
                "password":[$data['password']]
             }
         ]
-      }''';
-
-      print('data cero' + data['errors'].toString());
-      if (errors!.errors.email != null || errors!.errors.email != '') {
+      }''';*/
+      if (errors!.errors.email != null) {
         print('email ' + errors!.errors.email.toString());
         errorsList.add(errors!.errors.email.toString());
       }
-      if (errors!.errors.lastName != null || errors!.errors.lastName != '') {
+      if (errors!.errors.lastName != null) {
         print('lastName ' + errors!.errors.lastName.toString());
         errorsList.add(errors!.errors.lastName.toString());
       }
-      if (errors!.errors.password != null || errors!.errors.password != '') {
+      if (errors!.errors.password != null) {
         print('password ' + errors!.errors.password.toString());
         errorsList.add(errors!.errors.password.toString());
       }
-      if (errors!.errors.name != null || errors!.errors.name != '') {
+      if (errors!.errors.name != null) {
         print('name ' + errors!.errors.name.toString());
         errorsList.add(errors!.errors.name.toString());
       }
@@ -91,15 +89,17 @@ class RegisterProvider extends ChangeNotifier {
           break;
         }
       }
-    }
-    for (int i = 0; i < errorsList.length; i++) {
-      errorsList[i] = errorsList[i].replaceAll('[', '');
-    }
-    for (int i = 0; i < errorsList.length; i++) {
-      errorsList[i] = errorsList[i].replaceAll(']', '');
-    }
-    for (int i = 0; i < errorsList.length; i++) {
-      errorsList[i] = errorsList[i].replaceAll(',', '\n\n');
+      for (int i = 0; i < errorsList.length; i++) {
+        errorsList[i] = errorsList[i].replaceAll('[', '');
+      }
+      for (int i = 0; i < errorsList.length; i++) {
+        errorsList[i] = errorsList[i].replaceAll(']', '');
+      }
+      for (int i = 0; i < errorsList.length; i++) {
+        errorsList[i] = errorsList[i].replaceAll(',', '\n\n');
+      }
+    } else {
+      errorsList.add(data['message'].toString());
     }
 
     notifyListeners();

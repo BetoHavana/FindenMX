@@ -17,7 +17,6 @@ class CarsProvider extends ChangeNotifier {
 
   CarsProvider() {
     print('CarsProvider starts');
-    carFound;
   }
   set isLoading(bool value) {
     _isLoading = value;

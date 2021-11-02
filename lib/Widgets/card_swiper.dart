@@ -91,11 +91,28 @@ class _CardSwiperState extends State<CardSwiper> {
                         await cardManager.doPayment();
                         loadProgress();
                         if (cardManager.paid) {
-                          _showPaymentAlert(
-                              context, 'Pago éxitoso', 'Pagado', widget.token);
+                          AlertMsg.showSuccessAlert(
+                              context, 
+                              'Pago éxitoso', 
+                              'Servicio Pagado\nhemos enviado un correo con la información solicitada', 
+                               widget.token,
+                               'findcar');
+                          Constants.isPaid = true;
                         } else {
-                          _mostrarAlert(context,
-                              'Hubo un error, intenta de nuevo', 'Error');
+                          if(cardManager.errorPaidMsg.toString() == 'La cuenta ya fue pagada'){
+                            AlertMsg.showErrorAlert(
+                              context,
+                              'Alerta',
+                              'Esta búsqueda ya fue pagada, puedes verla en la sección de "Mis búsquedas"',
+                            );
+                          } else {
+                          AlertMsg.showErrorAlert(
+                            context,
+                            cardManager.errorPaidMsg.toString()+
+                            '\nContacte a soporte para mas ayuda',
+                            'Hubo un error');
+
+                          }
                         }
                       },
                 child: Hero(
@@ -169,60 +186,5 @@ class _CardSwiperState extends State<CardSwiper> {
         ]));
   }
 
-  void _mostrarAlert(BuildContext context, String textM, String title) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-  }
-
-  void _showPaymentAlert(
-      BuildContext context, String textM, String title, String token) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(textM),
-              ],
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text('Aceptar'),
-                onPressed: () {
-                  Constants.isPaid = true;
-                  Navigator.pushReplacementNamed(context, 'findcar',
-                      arguments: token);
-                },
-              ),
-            ],
-          );
-        });
-  }
+  
 }

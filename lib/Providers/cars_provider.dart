@@ -37,7 +37,7 @@ class CarsProvider extends ChangeNotifier {
 
   getCars() async {
     final jsonData =
-        await this._getJsonData('api_carros/public/api/v1/cars/' + this.placa!);
+        await this._getJsonData('api_carros/public/api/v1/cars/' + this.placa!.toUpperCase());
     final Map<String, dynamic> data = json.decode(jsonData);
     print('response' + jsonData);
     if (data.containsKey('car')) {

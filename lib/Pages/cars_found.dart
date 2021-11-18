@@ -56,11 +56,11 @@ class CarsFoundPage extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(height: 300),
-              CircularProgressIndicator(
+              /*CircularProgressIndicator(
                 backgroundColor: Colors.grey,
                 strokeWidth: 5,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 20),*/
               Text('Inicia sesión para ver esta sección')
             ],
           ),

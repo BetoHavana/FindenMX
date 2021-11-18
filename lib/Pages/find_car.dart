@@ -12,6 +12,7 @@ class FindCarPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final String? token = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Encuentra tu vehículo'),
           backgroundColor: Color.fromRGBO(2, 82, 116, 1),
@@ -30,7 +31,6 @@ class FindCarPage extends StatelessWidget {
                       child: Column(
                         children: [
                           _CarBrowserCard(child: _CarBrowserForm(token: token)),
-                          _CarFound()
                         ],
                       )))),
         ));
@@ -96,7 +96,7 @@ class _CarBrowserForm extends StatelessWidget {
                       ? null
                       : 'La placa debe contener 5 o más letras/números';
                 }),
-            SizedBox(height: 30),
+            /*SizedBox(height: 30),
             TextFormField(
                 autocorrect: false,
                 //obscureText: true, -> to hide passwords, black dots
@@ -110,7 +110,7 @@ class _CarBrowserForm extends StatelessWidget {
                   return (value == null || value.toString().isEmpty)
                       ? 'Ingresa un modelo válido'
                       : null;
-                }*/),
+                }*/),*/
             SizedBox(height: 30),
             MaterialButton(
                 shape: RoundedRectangleBorder(
@@ -148,18 +148,19 @@ class _CarBrowserForm extends StatelessWidget {
                             'Intenta nuevamente, verifica la placa y modelo',
                           );
                         }
-                      })
+                      }),
+            _CarFound(),
           ],
         ),
       ),
     );
   }
-  
+
   void _showPaymentAlert(
       BuildContext context, String textM, String title, String token) {
     showDialog(
         context: context,
-        barrierDismissible: true,
+        barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
@@ -209,11 +210,13 @@ class _CarFound extends StatelessWidget {
           ),
           Text('Datos encontrados',
               style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-          _CarFoundBrowserCard(
-              child: Table(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
+          SizedBox(
+            height: 10,
+          ),
+          Table(
             children: [
               TableRow(children: [
                 Container(
@@ -236,16 +239,20 @@ class _CarFound extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ))),
               ]),
-              
               TableRow(children: [
-                
-                Container(alignment: Alignment.center,child: Text(car!.car.licensePlate.toString())),
-                Container(alignment: Alignment.center,child: Text(car.car.model.toString())),
-                Container(alignment: Alignment.center,child: Text(DateFormat('dd-MM-yyyy').format(car.car.createdAt!))),
-                
+                Container(
+                    alignment: Alignment.center,
+                    child: Text(car!.car.licensePlate.toString())),
+                Container(
+                    alignment: Alignment.center,
+                    child: Text(car.car.model.toString())),
+                Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                        DateFormat('dd-MM-yyyy').format(car.car.createdAt!))),
               ])
             ],
-          )),
+          )
         ],
       );
     } else {

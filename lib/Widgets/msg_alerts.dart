@@ -9,7 +9,7 @@ class AlertMsg{
     String route = '']) {
   showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           shape:
@@ -38,7 +38,7 @@ class AlertMsg{
   static void showErrorAlert(BuildContext context, String title, String textM) {
     showDialog(
         context: context,
-        barrierDismissible: true,
+        barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
@@ -61,8 +61,6 @@ class AlertMsg{
           );
         });
   }
-
-
 }
 
 
